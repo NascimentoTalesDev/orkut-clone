@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --bg-primary: #d4dded;
+    --white: #FFFFFF;
+    --orkut: #ec1b90;
+}
+
+body {
+  
+}
+
+.bg-primary {
+    background-color: var(--bg-primary);
+}
+.bg-white{
+    background-color: var(--white);
+}
+.orkut{
+    color: var(--orkut);
+}
+.btn-login{
+    background-color: var(--bg-primary);
+    padding: 5px;
+    border-radius: 4px;
+}
