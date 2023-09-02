@@ -4,8 +4,12 @@
 
 :root {
     --bg-primary: #d4dded;
+    --bg-secondary: hsla(217, 54%, 84%, 0.4);
+    --bg-third: #bacbe9;
     --white: #FFFFFF;
     --orkut: #ec1b90;
+    --link: blue;
+    --gray-color: gray; 
 }
 
 body {
@@ -15,6 +19,12 @@ body {
 .bg-primary {
     background-color: var(--bg-primary);
 }
+.bg-secondary {
+    background-color: var(--bg-secondary);
+}
+.bg-third{
+    background-color: var(--bg-third);
+}
 .bg-white{
     background-color: var(--white);
 }
@@ -22,7 +32,19 @@ body {
     color: var(--orkut);
 }
 .btn-login{
-    background-color: var(--bg-primary);
-    padding: 5px;
+    background-color: var(--white);
+    padding: 3px 1px;
+    border: 1px solid gray;
     border-radius: 4px;
+}
+.link{
+    text-decoration: underline;
+    color: var(--link);
+}
+.color-gray{
+    color: var(--gray-color);
+}
+.min-s-300{
+    min-width: 300px;
+    width: 20%;
 }

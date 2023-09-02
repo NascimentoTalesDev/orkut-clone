@@ -2,6 +2,7 @@
 
 export default function Button(props) {
   return (
-    <button className='btn-login'>{props.text}</button>
+    <button 
+      className={`btn-login ${props.className}`}>{props.text}</button>
   )
 }
