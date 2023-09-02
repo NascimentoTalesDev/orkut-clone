@@ -8,6 +8,9 @@ export default function InputButton(props) {
         border={props.border}
         placeholder={props.placeholder}
         name={props.name}
+        value={props.value}
+        onChange={props.onChange}
+        required={props.required}
     ></input>
   )
 }

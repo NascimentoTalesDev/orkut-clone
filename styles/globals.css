@@ -48,3 +48,6 @@ body {
     min-width: 300px;
     width: 20%;
 }
+.danger{
+    color: red;
+}

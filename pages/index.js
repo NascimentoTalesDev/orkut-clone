@@ -1,7 +1,8 @@
 import React from 'react'
+import Login from './login'
 
 export default function home() {
   return (
-    <div>Home</div>
+    <Login />
   )
 }

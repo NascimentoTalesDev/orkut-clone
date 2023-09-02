@@ -1,11 +1,56 @@
-import AButton from '@/components/AButton'
 import Button from '@/components/Button'
 import InputButton from '@/components/InputButton'
 import Logo from '@/components/Logo'
-import TextArea from '@/components/TextArea'
-import React from 'react'
+import axios from 'axios'
+import { useRouter } from 'next/router'
+import React, { useState } from 'react'
 
 export default function signup() {
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [errorPassword, setErrorPassword] = useState(false)
+  const [userExists, setUserExists] = useState('')
+  const [message, setMessage] = useState('')
+
+  const route = useRouter()
+
+  function checkMath(ev) {
+    ev.preventDefault()
+
+    if(confirmPassword !== password){
+      setErrorPassword(true)
+    }else{
+      setErrorPassword(false)
+      signup(email, password)
+    }
+
+  }
+
+  async function signup(email, password) {
+    const data = { email, password };
+
+    await axios.post("/api/signup", data).then(response => {
+      
+      const user = (response.data);
+
+      if(user.success === false){
+        setUserExists(true)
+        setMessage(user.message)
+        return
+
+      }else{
+        setMessage("")
+        
+        route.push("/profile")
+      }
+
+    })
+  }
+  
+
+
   return (
     <div className='flex flex-col w-screen h-screen'>
 
@@ -51,30 +96,36 @@ export default function signup() {
         </div>
 
         <div className='grow'> 
-          <form className='flex flex-col gap-3'>
+          <form onSubmit={checkMath} className='flex flex-col gap-3'>
             <div className='h-20 flex flex-col'>
               <h1 className='bg-third pl-1 w-full'>Crie sua conta do Google</h1>
               <p className='text-sm pl-1 mt-6'>Vamos criar uma conta do Google para que você possa usar o Orkut. Se você  ja tem uma conta. <a className='link' href='/login'>Faça login com ela</a>.</p>
             </div>
             <div className='h-12'>
-              <InputButton className="border w-72" type="text"/>
+              <InputButton value={email} onChange={(ev) => setEmail(ev.target.value)} className="border w-72" type="text" required/>
               <p className='text-sm color-gray'>por exemplo, myname@example.com. Esse será o seu nome de usuário e acesso</p>
             </div>
             <div className='h-12'>
-              <InputButton className="border w-40" type="password"/>
+              <InputButton value={password} onChange={(ev) => setPassword(ev.target.value)} className="border w-40" type="password" required />
               <p className='text-sm color-gray'>no mínimo, 8 caracteres.</p>
             </div>
             <div className='h-12'>
-              <InputButton className="border w-40" type="password"/>
+              <InputButton value={confirmPassword} onChange={(ev) => setConfirmPassword(ev.target.value)} className="border w-40" type="password" required />
+              {errorPassword && (
+                  <p className='danger'>As senhas não conferem!</p>
+              )}
             </div>
             <div className='w-9/12'>
               <h3>Digite os caracteres que você vê na figura abaixo.</h3>
               <img></img>
-              <InputButton className="border w-40" type="password"/>
+              <InputButton className="border w-40" type="password" />
               <p className='text-sm color-gray'>As letras não diferenciam minusculas de maiúsculas.</p>
             </div>
             <div className='mt-2'>
-              <Button className="w-20" text='Criar'></Button>
+              <Button type='submit' className="w-20" text='Criar'></Button>
+                {userExists && (
+                  <p className='danger'>{message}</p>
+                )}
             </div>
           </form>
         </div>

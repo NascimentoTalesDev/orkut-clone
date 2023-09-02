@@ -2,9 +2,44 @@ import Button from '@/components/Button'
 import InputButton from '@/components/InputButton'
 
 import Logo from '@/components/Logo'
+import axios from 'axios'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 
 export default function login() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const [userExists, setUserExists] = useState('')
+  const [message, setMessage] = useState('')
+
+  const router = useRouter()
+
+  async function signIn (ev) {
+    ev.preventDefault()
+    
+    const data = {email, password}
+
+    await axios.post('/api/signin', data).then(response =>{
+      const user = (response.data);
+
+      if(user.success === false){
+        setMessage(user.message)
+        setUserExists(false)
+        setTimeout(() => {
+          setMessage('')
+        }, 1500);
+        return
+
+      }else{
+        setMessage("")
+        router.push("/profile")
+      }
+    })
+    
+  }
+
   return (
     <div className='flex items-center justify-center bg-primary h-screen w-screen'>
       
@@ -28,14 +63,14 @@ export default function login() {
             <div className='bg-white p-1 grow'>
               <div className='flex flex-col text-center p-3 bg-secondary h-full'>
                 <h2 className='mb-2'>Acesse o Orkut com a sua conta</h2>
-                <form className='flex flex-col gap-2'>
+                <form onSubmit={signIn} className='flex flex-col gap-2'>
                   <div className='flex items-baseline'>
-                    <label className='mr-1'>Nome:</label>
-                    <InputButton type='text' placeholder='Tales Nascimento'/>
+                    <label className='mr-2'>Email:</label>
+                    <InputButton onChange={(ev) => setEmail(ev.target.value)} type='text' placeholder='meuemail@hotmail.com' required/>
                   </div>
                   <div className='flex items-baseline'>
                     <label className='mr-1'>Senha:</label>
-                    <InputButton type='password' placeholder='********'/>
+                    <InputButton onChange={(ev) => setPassword(ev.target.value)} type='password' placeholder='********' required />
                   </div>
                   
                   <label>
@@ -44,7 +79,13 @@ export default function login() {
                   </label>
 
                   <p className='text-center'>Não use em computadores públicos. [?]</p>
-                  <Button className="w-20" text="Login"></Button>
+                  <div className='flex flex-col items-baseline h-14'> 
+                    <Button type="submit" className="w-20 ml-10" text="Login" />
+                    {!userExists && (
+                      <p className='danger'>{message}</p>
+                      
+                    ) }
+                  </div>
                   <a href='/recovery' className='text-center link'>Não consegue acessar a sua conta?</a>
                 </form>
               </div>
