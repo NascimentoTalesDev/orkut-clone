@@ -2,6 +2,7 @@ import Button from '@/components/Button'
 import InputButton from '@/components/InputButton'
 
 import Logo from '@/components/Logo'
+import authUser from '@/helpers/authUser'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -34,7 +35,8 @@ export default function login() {
 
       }else{
         setMessage("")
-        router.push("/profile")
+        authUser(user)
+        router.push("/welcome")
       }
     })
     

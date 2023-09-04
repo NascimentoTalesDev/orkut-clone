@@ -1,6 +1,7 @@
 import Button from '@/components/Button'
 import InputButton from '@/components/InputButton'
 import Logo from '@/components/Logo'
+import authUser from '@/helpers/authUser'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
@@ -13,6 +14,7 @@ export default function signup() {
   const [errorPassword, setErrorPassword] = useState(false)
   const [userExists, setUserExists] = useState('')
   const [message, setMessage] = useState('')
+  const [authenticated, setAuthenticated] = useState(false)
 
   const route = useRouter()
 
@@ -42,8 +44,10 @@ export default function signup() {
 
       }else{
         setMessage("")
-        
-        route.push("/profile")
+        authUser(user)
+        setAuthenticated(true)
+
+        route.push("/welcome")
       }
 
     })
