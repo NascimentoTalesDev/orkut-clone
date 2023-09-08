@@ -1,12 +1,15 @@
 
-import { checkUser } from '@/helpers/checkUser'
-import React from 'react'
+import PrivateRoute from '@/components/PrivateRoute'
+import { AuthContext } from '@/context/authContext'
+import React, { useContext } from 'react'
 
 export default function welcome(){
 
-  checkUser()
+  const { user, setUser } = useContext(AuthContext)
 
   return (
-    <div>welcome</div>
+    
+    <div>{user} welcome</div>
+    
   )
 }

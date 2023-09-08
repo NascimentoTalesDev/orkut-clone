@@ -30,9 +30,5 @@ export default async function signIn(req, res) {
         await createUserToken(User, req, res)
 
         res.send({UserDoc, success: true})
-        
-        console.log(UserDoc);
-
-        
     }
 }
