@@ -1,10 +1,10 @@
-import { AuthProvider } from '@/context/authContext'
+import { UseProvider } from '@/context/UserContext'
 import '@/styles/globals.css'
 
 export default function App({ Component, pageProps }) {
   return( 
-    <AuthProvider>
+    <UseProvider>
       <Component {...pageProps} />
-    </AuthProvider>
+    </UseProvider>
   )
 }

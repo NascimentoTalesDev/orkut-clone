@@ -1,15 +1,17 @@
-
-import PrivateRoute from '@/components/PrivateRoute'
-import { AuthContext } from '@/context/authContext'
-import React, { useContext } from 'react'
+import useAuth from '@/hooks/useAuth';
 
 export default function welcome(){
 
-  const { user, setUser } = useContext(AuthContext)
-
+  const { logout, authenticated } = useAuth()
+  
+  console.log(authenticated);
+  function sair() {
+    logout()
+  }
   return (
-    
-    <div>{user} welcome</div>
-    
+    <>
+      <div>welcome</div>
+      <button onClick={sair}>Sair</button>
+    </>
   )
 }

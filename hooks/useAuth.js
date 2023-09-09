@@ -1,42 +1,49 @@
-// useAuth.js
-import { useState, useEffect, useContext } from 'react';
-import { verify } from 'jsonwebtoken';
-import { AuthContext } from '@/context/authContext';
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 
-const useAuth =  ()  => {
-    const { user, setUser } = useContext(AuthContext)
+export default function useAuth() {
+    const [authenticated, setAuthenticated] = useState(false)
+    const route = useRouter()
 
-        useEffect(() => {
-            const token = await localStorage.getItem('token');
-            console.log("Este é o token", token);
+    useEffect(() => {
+        const token = localStorage.getItem('token')
 
         if (token) {
 
-            try {
-                console.log("Este é o token aqui também", token);
-                const decodedUser = verify(token);
-
-                console.log("Verificado", decodedUser);
-                setUser(decodedUser);
-
-            } catch (error) {
-                console.log("TOKEN INVALIDO");
-                // Invalid or expired token
-                localStorage.removeItem('token');
-                setUser(null);
-            }
-
-        } else {
-          setUser(null);
+            setAuthenticated(true)
         }
-  }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setUser(null);
-  };
+    }, [])
+    
 
-  return { user, handleLogout };
-};
+    async function register(user) {
 
-export default useAuth;
+        await authUser(user);
+
+    }
+
+    async function authUser(user){
+        
+        localStorage.setItem('token', JSON.stringify(user.token))
+
+        console.log("authUser", authenticated);
+        
+        route.push('/welcome')
+    }
+
+    async function login(user) {
+        
+        await authUser(user)
+    }
+
+    async function logout(user) {
+
+        setAuthenticated(false)
+
+        localStorage.removeItem('token')
+
+        route.push('/')
+    }
+
+    return { authenticated, register, logout, login }
+}

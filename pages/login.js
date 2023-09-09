@@ -2,21 +2,23 @@ import Button from '@/components/Button'
 import InputButton from '@/components/InputButton'
 
 import Logo from '@/components/Logo'
-import authUser from '@/helpers/authUser'
+import useAuth from '@/hooks/useAuth'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
 
-export default function login() {
+export default function loginn() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
+  
   const [userExists, setUserExists] = useState('')
   const [message, setMessage] = useState('')
-
+  
   const router = useRouter()
-
+  
+  const { login } = useAuth()
+  
   async function signIn (ev) {
     ev.preventDefault()
     
@@ -32,14 +34,11 @@ export default function login() {
           setMessage('')
         }, 1500);
         return
-
-      }else{
-        setMessage("")
-        authUser(user)
-        router.push("/welcome")
       }
-    })
+      setMessage("")
     
+      login(user)
+    })
   }
 
   return (
