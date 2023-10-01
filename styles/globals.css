@@ -31,12 +31,6 @@ body {
 .orkut{
     color: var(--orkut);
 }
-.btn-login{
-    background-color: var(--white);
-    padding: 3px 1px;
-    border: 1px solid gray;
-    border-radius: 4px;
-}
 .link{
     text-decoration: underline;
     color: var(--link);

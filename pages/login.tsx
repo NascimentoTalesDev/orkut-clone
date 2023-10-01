@@ -1,45 +1,9 @@
-import Button from '@/components/Button'
-import InputButton from '@/components/InputButton'
-
-import Logo from '@/components/Logo'
-import useAuth from '@/hooks/useAuth'
-import axios from 'axios'
-import { useRouter } from 'next/router'
-import { useState } from 'react'
+import Button from "@/components/Button";
+import InputButton from "@/components/InputButton";
+import Logo from "@/components/Logo";
 
 
-export default function loginn() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  
-  const [userExists, setUserExists] = useState('')
-  const [message, setMessage] = useState('')
-  
-  const router = useRouter()
-  
-  const { login } = useAuth()
-  
-  async function signIn (ev) {
-    ev.preventDefault()
-    
-    const data = {email, password}
-
-    await axios.post('/api/signin', data).then(response =>{
-      const user = (response.data);
-
-      if(user.success === false){
-        setMessage(user.message)
-        setUserExists(false)
-        setTimeout(() => {
-          setMessage('')
-        }, 1500);
-        return
-      }
-      setMessage("")
-    
-      login(user)
-    })
-  }
+export default function login() {
 
   return (
     <div className='flex items-center justify-center bg-primary h-screen w-screen'>
@@ -60,18 +24,17 @@ export default function loginn() {
           </div>
 
           <div className='flex flex-col justify-between w-1/3 gap-2'>
-            
             <div className='bg-white p-1 grow'>
               <div className='flex flex-col text-center p-3 bg-secondary h-full'>
                 <h2 className='mb-2'>Acesse o Orkut com a sua conta</h2>
-                <form onSubmit={signIn} className='flex flex-col gap-2'>
+                <form className='flex flex-col gap-2'>
                   <div className='flex items-baseline'>
                     <label className='mr-2'>Email:</label>
-                    <InputButton onChange={(ev) => setEmail(ev.target.value)} type='text' placeholder='meuemail@hotmail.com' required/>
+                    <InputButton type="text" className="w-full" required={true} />
                   </div>
                   <div className='flex items-baseline'>
                     <label className='mr-1'>Senha:</label>
-                    <InputButton onChange={(ev) => setPassword(ev.target.value)} type='password' placeholder='********' required />
+                    <InputButton type="password" className="w-full" required={true} />
                   </div>
                   
                   <label>
@@ -80,22 +43,17 @@ export default function loginn() {
                   </label>
 
                   <p className='text-center'>Não use em computadores públicos. [?]</p>
-                  <div className='flex flex-col items-baseline h-14'> 
-                    <Button type="submit" className="w-20 ml-10" text="Login" />
-                    {!userExists && (
-                      <p className='danger'>{message}</p>
-                      
-                    ) }
+                  <div> 
+                    <Button text='Entrar' className="border-gray-500 border px-4 rounded-sm ml-auto cursor-pointer hover:opacity-80"/>
                   </div>
                   <a href='/recovery' className='text-center link'>Não consegue acessar a sua conta?</a>
                 </form>
               </div>
             </div>
-
             <div className='bg-white p-1 text-center'>
               <div className='bg-secondary py-2'>
                 <h2>Ainda não é membro?</h2>
-                <a className='link uppercase font-bold' href='/preSignup'>Entrar Já</a>
+                <a className='link uppercase font-bold' href='/pre-signup'>Entrar Já</a>
               </div>
             </div>
 

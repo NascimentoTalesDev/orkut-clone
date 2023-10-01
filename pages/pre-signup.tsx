@@ -59,12 +59,12 @@ export default function preSignup() {
               </div>
               <div className='h-12'>
                 <label>nome:</label>
-                <InputButton className="border mx-2 w-32" type="text" />
+                <InputButton className="w-36 border mx-2" type="text" />
                 <label>sobrenome:</label>
-                <InputButton className="border mx-2 w-44" type="text" />
+                <InputButton className="w-56 border mx-2" type="text" />
               </div>
-              <div className='h-20'>
-                <div className='flex gap-2'>
+              <div className='h-20 rounded-none'>
+                <div className='flex gap-2 rounded-none'>
                   <select value={"mes"}>
                     <option value={1}>Janeiro</option>
                     <option value={2}>Fevereiro</option>
@@ -85,11 +85,11 @@ export default function preSignup() {
               </div>
               <div className='flex gap-2'>
                 <label className='flex gap-1'>
-                  <InputButton type="radio" name="sex" />
+                  <InputButton type="radio" name="sex" value="M" />
                   <p>Masculino</p>
                 </label>
                 <label className='flex gap-1'>
-                  <InputButton type="radio" name="sex" />
+                  <InputButton type="radio" name="sex" value='F'/>
                   <p>Feminino</p>
                 </label>
               </div>
@@ -98,7 +98,7 @@ export default function preSignup() {
                 <h3>Ao clicar em "Aceito", você concorda com os <a href='/googleterms' className='link'>Termos de Serviços do Google</a> apresentados acima, com os <a href='/terms' className='link'>Termos Adicionais do orkut</a> e com a <a href='/privacy' className='link'>Politica de Privacidade</a>.</h3>
               </div>
               <div className='mt-2'>
-                <AButton href="/signup" className="w-28" text="Aceito >>"></AButton>
+                <AButton href="/sign-up" className="w-28 border bg-blue-100 px-2" text="Aceito >>"></AButton>
               </div>
           </form>
 
